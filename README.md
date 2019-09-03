@@ -2,7 +2,7 @@
 
 This is the to do list for the 3rd project
 
--initialiser un repo git \n
+-initialiser un repo git 
 -créer le labyrinthe sans l'interface graphique
 -utiliser Pygame pour dessiner l'interface graphique
 -trouver comment représenter le gardien, MacGyver, et les objets( une aiguille, un tube en plastique et de l'éther).
