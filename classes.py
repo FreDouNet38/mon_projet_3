@@ -41,6 +41,49 @@ class Map:
 				num_case += 1
 			num_ligne += 1
 
+class Perso:
+	"""Classe permettant de créer le personnage du jeu"""
+	def __init__(self, perso, niveau):
+		self.perso = pygame.image.load(perso).convert_alpha()
+		self.niveau = niveau
+		#Position en case et en pixels
+		self.case_x = 0
+		self.case_y = 0 
+		self.x = 0
+		self.y = 0
+		
+
+	def deplacer(self, direction):
+		if direction == 'droite':
+			#On verifie qu'il ne sort pas de la map
+			if self.case_x < (nombre_sprite_cote - 1):
+				#On vérifie que ce ne soit pas un mur
+				if self.niveau.structure[self.case_y][self.case_x+1] != 'm':
+					self.case_x += 1
+					self.x = self.case_x * taille_sprite
+			
+
+		if direction == 'gauche':
+			if self.case_x > 0:
+				if self.niveau.structure[self.case_y][self.case_x-1] != 'm':
+					self.case_x -= 1
+					self.x = self.case_x * taille_sprite
+
+		if direction == 'haut':
+			if self.case_y > 0:
+				if self.niveau.structure[self.case_y-1][self.case_x] != 'm':
+					self.case_y -= 1
+					self.y = self.case_y * taille_sprite
+
+		if direction == 'bas':
+			if self.case_y < (nombre_sprite_cote - 1):
+				if self.niveau.structure[self.case_y+1][self.case_x] != 'm':
+					self.case_y += 1
+					self.y = self.case_y * taille_sprite
+
+
+
+
 
 
 
