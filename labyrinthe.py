@@ -7,6 +7,7 @@ import pygame
 from pygame.locals import *
 from constantes import *
 from classes import *
+import random
 
 pygame.init()
 
@@ -20,6 +21,8 @@ niveau.generer()
 niveau.afficher(fenetre)
 mg = Perso("images/MacGyver.png", niveau)
 fenetre.blit(mg.perso,(mg.x, mg.y))
+aiguille = Item("images/aiguille.png", niveau, fenetre)
+aiguille.place_item(fenetre)
 
 continuer = 1
 while continuer:
@@ -41,7 +44,7 @@ while continuer:
 
 			elif event.key == K_DOWN:
 				mg.deplacer('bas')
-
+	
 	niveau.afficher(fenetre)
 	fenetre.blit(mg.perso, (mg.x, mg.y))
 	pygame.display.flip()

@@ -3,13 +3,14 @@
 import pygame
 from pygame.locals import *
 from constantes import *
+import random
 
 class Map:
 	"""Classe permettant de créer la map"""
 	def __init__(self,fichier):
 		self.fichier = fichier
 		self.structure = 0
-
+	
 	def generer(self):
 		with open(self.fichier, "r") as fichier:
 			structure_niveau = []
@@ -41,6 +42,7 @@ class Map:
 				num_case += 1
 			num_ligne += 1
 
+	
 class Perso:
 	"""Classe permettant de créer le personnage du jeu"""
 	def __init__(self, perso, niveau):
@@ -82,8 +84,34 @@ class Perso:
 					self.y = self.case_y * taille_sprite
 
 
+class Item:
+	"""Classe permettant de placer les items sur la map"""
+	def __init__ (self, image, niveau, fenetre):
+		self.image = pygame.image.load(image).convert()
+		self.niveau = niveau
+		self.case_x = 0 
+		self.case_y = 0 
+		self.x = 0
+		self.y = 0
+		self.fenetre = fenetre
+		self.surface = SURFACE
 
+	def place_item(self, fenetre):
+		position = []
+		coordinates = ()
+		num_ligne = 0
+		while num_ligne < len(self.niveau.structure):
+			num_case = 1
+			while num_case < len(self.niveau.structure[0]):
+				if self.niveau.structure[num_ligne][num_case] == '0':
+					coordinates = (num_ligne, num_case)
+					position.append(coordinates)
+				num_case += 1
+			num_ligne += 1
 
-
-
-
+		item_coordinates = random.choice(position)
+		self.case_y = item_coordinates[0]
+		self.case_x = item_coordinates[1]
+		self.x = self.case_x * taille_sprite
+		self.y = self.case_y * taille_sprite
+	
