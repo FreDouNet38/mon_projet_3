@@ -27,15 +27,12 @@ fenetre.blit(mg.perso,(mg.x, mg.y))
 
 aiguille = Item("images/aiguille.png","aiguille", niveau)
 aiguille.place_item()
-aiguille.pin_item()
 
 ether = Item("images/ether.png","ether", niveau)
 ether.place_item()
-ether.pin_item()
 
 tube = Item("images/tube_plastique.png", "tube", niveau)
 tube.place_item()
-tube.pin_item()
 
 continuer = 1
 while continuer:
@@ -49,7 +46,7 @@ while continuer:
 
 		elif event.type == KEYDOWN:
 			if event.key == K_RIGHT:
-					mg.deplacer('droite')
+				mg.deplacer('droite')
 
 			elif event.key == K_LEFT:
 				mg.deplacer('gauche')
@@ -67,3 +64,12 @@ while continuer:
 	ether.get_item(fenetre, mg, ITEMS)	
 	tube.get_item(fenetre, mg, ITEMS)
 	pygame.display.flip()
+
+	if niveau.structure[mg.case_x][mg.case_y] == 'f':
+		if len(ITEMS) < 2:
+			print("you lose")
+			continuer = 0
+
+		if len(ITEMS) == 3:
+			print("you win")
+			continuer = 0

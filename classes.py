@@ -115,14 +115,14 @@ class Item:
 		self.x = self.case_x * taille_sprite
 		self.y = self.case_y * taille_sprite
 		self.niveau.structure[self.case_x][self.case_y] = self.name
-		
-	def pin_item(self):
-		self.niveau.structure[self.case_x][self.case_y] = self.name
-
+	
 	def get_item(self, fenetre, mg, ITEMS):
 		if self.niveau.structure[self.case_x][self.case_y] == self.name:
 			fenetre.blit(self.image, (self.x, self.y))
 		if self.niveau.structure[mg.case_x][mg.case_y] == self.name:
-			self.niveau.structure[mg.case_x][mg.case_y] = '0'
 			ITEMS.append(self.name)
+			self.niveau.structure[mg.case_x][mg.case_y] = '0'
+			
+
+
 			
