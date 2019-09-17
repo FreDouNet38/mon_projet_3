@@ -87,14 +87,14 @@ class Perso:
 class Item:
 	"""Classe permettant de placer les items sur la map"""
 	def __init__ (self, image, niveau, fenetre):
-		self.image = pygame.image.load(image).convert()
+		self.image = pygame.image.load(image).convert_alpha()
 		self.niveau = niveau
 		self.case_x = 0 
 		self.case_y = 0 
 		self.x = 0
 		self.y = 0
 		self.fenetre = fenetre
-		self.surface = SURFACE
+	
 
 	def place_item(self, fenetre):
 		position = []
@@ -115,3 +115,5 @@ class Item:
 		self.x = self.case_x * taille_sprite
 		self.y = self.case_y * taille_sprite
 	
+	def show_item(self, fenetre):
+		fenetre.blit(self.image, (self.x, self.y))

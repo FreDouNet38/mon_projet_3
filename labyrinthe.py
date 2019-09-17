@@ -23,6 +23,10 @@ mg = Perso("images/MacGyver.png", niveau)
 fenetre.blit(mg.perso,(mg.x, mg.y))
 aiguille = Item("images/aiguille.png", niveau, fenetre)
 aiguille.place_item(fenetre)
+ether = Item("images/ether.png", niveau, fenetre)
+ether.place_item(fenetre)
+tube = Item("images/tube_plastique.png", niveau, fenetre)
+tube.place_item(fenetre)
 
 continuer = 1
 while continuer:
@@ -47,6 +51,9 @@ while continuer:
 	
 	niveau.afficher(fenetre)
 	fenetre.blit(mg.perso, (mg.x, mg.y))
+	aiguille.show_item(fenetre)
+	ether.show_item(fenetre)
+	tube.show_item(fenetre)
 	pygame.display.flip()
 
 
