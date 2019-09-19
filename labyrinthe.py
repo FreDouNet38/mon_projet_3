@@ -47,14 +47,14 @@ while continuer:
             if event.key == K_RIGHT:
                 mg.deplacer('droite')
 
-        elif event.key == K_LEFT:
-            mg.deplacer('gauche')
+            elif event.key == K_LEFT:
+                mg.deplacer('gauche')
 
-        elif event.key == K_UP:
-            mg.deplacer('haut')
+            elif event.key == K_UP:
+                mg.deplacer('haut')
 
-        elif event.key == K_DOWN:
-            mg.deplacer('bas')
+            elif event.key == K_DOWN:
+                mg.deplacer('bas')
 
     niveau.afficher(fenetre)
     fenetre.blit(mg.perso, (mg.x, mg.y))
