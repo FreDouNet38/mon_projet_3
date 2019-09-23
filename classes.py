@@ -86,20 +86,28 @@ class Perso:
         if self.niveau.structure[self.case_x][self.case_y] == 'aiguille':
             self.niveau.structure[self.case_x][self.case_y] = '0'
             self.ITEMS.append('aiguille')
+            print("Good you've got the needle")
+            if len(self.ITEMS) == 3:
+                print("You can make the guard sleep with that seringe full of ether :)")
         elif self.niveau.structure[self.case_x][self.case_y] == 'ether':
+            self.niveau.structure[self.case_x][self.case_y] = '0'
             self.ITEMS.append('ether')
-            self.niveau.structure[self.case_x][self.case_y] = '0'
+            print("Nice! You've found some ether")
+            if len(self.ITEMS) == 3:
+                print("You can make the guard sleep with that seringe full of ether :)")
         elif self.niveau.structure[self.case_x][self.case_y] == 'tube':
-            self.ITEMS.append('tube')
             self.niveau.structure[self.case_x][self.case_y] = '0'
-        return len(self.ITEMS)
+            self.ITEMS.append('tube')
+            print("You've got the tube you need to make the seringe")
+            if len(self.ITEMS) == 3:
+                print("You can make the guard sleep with that seringe full of ether :)")
 
 
 class Item:
     """Classe permettant de placer les items sur la map"""
     def __init__ (self, image,name, niveau):
         self.image = pygame.image.load(image).convert_alpha()
-        
+
         self.niveau = niveau
         self.case_x = 0 
         self.case_y = 0 
@@ -111,15 +119,11 @@ class Item:
     def place_item(self):
         position = []
         coordinates = ()
-        num_ligne = 0
-        while num_ligne < len(self.niveau.structure):
-            num_case = 1
-            while num_case < len(self.niveau.structure[0]):
-                if self.niveau.structure[num_ligne][num_case] == '0':
-                    coordinates = (num_ligne, num_case)
+        for k, ligne in enumerate(self.niveau.structure):
+            for j, case in enumerate(ligne):
+                if self.niveau.structure[k][j] == '0':
+                    coordinates = (k, j)
                     position.append(coordinates)
-                num_case += 1
-            num_ligne += 1
 
         item_coordinates = random.choice(position)
         self.case_y = item_coordinates[0]

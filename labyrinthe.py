@@ -11,12 +11,10 @@ import random
 
 pygame.init()
 
+
 #Ouverture de la fenêtre
 fenetre = pygame.display.set_mode((cote_fenetre, cote_fenetre))
-
 pygame.display.set_caption(titre_fenetre)
-
-
 
 niveau = Map('niveau.txt')
 niveau.generer()
@@ -36,14 +34,12 @@ ether.place_item()
 tube = Item(image_tube, "tube", niveau)
 tube.place_item()
 
-
-continuer = 1
-while continuer:
+while True:
     pygame.time.Clock().tick(30)
 
     for event in pygame.event.get():
         if event.type == QUIT:
-            continuer = 0
+            break
 
         elif event.type == KEYDOWN:
             if event.key == K_RIGHT:
@@ -72,8 +68,8 @@ while continuer:
 
     if niveau.structure[mg.case_x][mg.case_y] == 'f':
     	if len(mg.ITEMS) < 3:
-    		continuer = 0
     		print("you lose")
+    		break
     	elif len(mg.ITEMS) == 3:
-    		continuer = 0
     		print("you win")
+    		break
