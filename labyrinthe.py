@@ -12,28 +12,31 @@ import random
 pygame.init()
 
 
-#Ouverture de la fenêtre
-fenetre = pygame.display.set_mode((cote_fenetre, cote_fenetre))
-pygame.display.set_caption(titre_fenetre)
+#To open the window
+window = pygame.display.set_mode((side, side))
+pygame.display.set_caption(window_title)
 
-niveau = Map('niveau.txt')
-niveau.generer()
-niveau.afficher(fenetre)
+#To display the level
+level = Map('niveau.txt')
+level.generate()
+level.show(window)
 
-mg = Perso(image_mac, niveau)
-fenetre.blit(mg.perso, (mg.x, mg.y))
+#To display MacGyver
+mg = Player(image_mac, level)
+window.blit(mg.player, (mg.x, mg.y))
 
-aiguille = Item(image_needle, 'aiguille', niveau)
-aiguille.place_item()
+#To display the items
+needle = Item(image_needle, "needle", level)
+needle.place_item()
 
-
-ether = Item(image_ether, "ether", niveau)
+ether = Item(image_ether, "ether", level)
 ether.place_item()
 
-
-tube = Item(image_tube, "tube", niveau)
+tube = Item(image_tube, "tube", level)
 tube.place_item()
 
+
+#Game loop
 while True:
     pygame.time.Clock().tick(30)
 
@@ -43,30 +46,30 @@ while True:
 
         elif event.type == KEYDOWN:
             if event.key == K_RIGHT:
-                mg.deplacer('droite')
+                mg.deplacer('right')
 
             elif event.key == K_LEFT:
-                mg.deplacer('gauche')
+                mg.deplacer('left')
 
             elif event.key == K_UP:
-                mg.deplacer('haut')
+                mg.deplacer('up')
 
             elif event.key == K_DOWN:
-                mg.deplacer('bas')
+                mg.deplacer('down')
 
-    niveau.afficher(fenetre)
-    aiguille.display_item(fenetre)
-    ether.display_item(fenetre)
-    tube.display_item(fenetre)
-    mg.check_item(aiguille)
+    level.show(window)
+    needle.display_item(window)
+    ether.display_item(window)
+    tube.display_item(window)
+    mg.check_item(needle)
     mg.check_item(ether)
     mg.check_item(tube)
-    fenetre.blit(mg.perso, (mg.x, mg.y))
+    window.blit(mg.player, (mg.x, mg.y))
     pygame.display.flip()
 
 
-
-    if niveau.structure[mg.case_x][mg.case_y] == 'f':
+    #Condition to win
+    if level.structure[mg.sprite_x][mg.sprite_y] == 'f':
     	if len(mg.ITEMS) < 3:
     		print("you lose")
     		break

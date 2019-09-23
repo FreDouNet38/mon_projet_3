@@ -1,10 +1,10 @@
 """The game's constants"""
 
 #Paramètre de la fenêtre
-nombre_sprite_cote = 15
-taille_sprite = 30
-cote_fenetre = nombre_sprite_cote * taille_sprite
-titre_fenetre = "Get out MacGyver!!"
+number_of_sprite = 15
+sprite_size = 30
+side = number_of_sprite * sprite_size
+window_title = "Get out MacGyver!!"
 
 #Ensemble des images
 image_mac = "images/mg.png"

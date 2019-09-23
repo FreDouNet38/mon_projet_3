@@ -9,6 +9,6 @@ This is the to do list for the 3rd project
 - trouver où placer les objets au début du jeu. CHECK
 - créer les méthodes permettant d'animer MacGyver	CHECK
 - créer les méthodes pour que MacGyver puisse ramasser les 3 objets. CHECK
-- créer les méthodes pour compter le nombre d'objets récupérés et les assembler
-- créer la méthode pour endormir le garde
-- créer la méthode pour valider la victoire ou non, la victoire est possible seulement si MacGyver récupère les 3 objets avant d'arriver devant le garde.
+- créer les méthodes pour compter le nombre d'objets récupérés et les assembler CHECK
+- créer la méthode pour endormir le garde CHECK
+- créer la méthode pour valider la victoire ou non, la victoire est possible seulement si MacGyver récupère les 3 objets avant d'arriver devant le garde.CHECK

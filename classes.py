@@ -6,97 +6,97 @@ from constantes import *
 import random
 
 class Map:
-    """Classe permettant de créer la map"""
-    def __init__(self,fichier):
-        self.fichier = fichier
+    """Class which allow the creation of the map"""
+    def __init__(self,folder):
+        self.folder = folder
         self.structure = []
     
-    def generer(self):
-        with open(self.fichier, "r") as fichier:
-            structure_niveau = []
-            for ligne in fichier:
-                ligne_niveau = []
-                for sprite in ligne:
+    def generate(self):
+        with open(self.folder, "r") as folder:
+            level_structure = []
+            for line in folder:
+                level_line = []
+                for sprite in line:
                     if sprite != '\n':
-                        ligne_niveau.append(sprite)
-                structure_niveau.append(ligne_niveau)
-            self.structure = structure_niveau
+                        level_line.append(sprite)
+                level_structure.append(level_line)
+            self.structure = level_structure
 
-    def afficher(self, fenetre):
-        mur = pygame.image.load(image_wall).convert_alpha()
-        sol = pygame.image.load(image_floor).convert_alpha()
-        gardien = pygame.image.load(image_guard).convert_alpha()
+    def show(self, window):
+        wall = pygame.image.load(image_wall).convert_alpha()
+        floor = pygame.image.load(image_floor).convert_alpha()
+        guard = pygame.image.load(image_guard).convert_alpha()
 
-        num_ligne = 0
-        for ligne in self.structure:
-            num_case = 0
-            for sprite in ligne:
-                x = num_case * taille_sprite
-                y = num_ligne * taille_sprite
+        line_nb = 0
+        for line in self.structure:
+            sprite_nb = 0
+            for sprite in line:
+                x = sprite_nb * sprite_size
+                y = line_nb * sprite_size
                 if sprite == 'm':
-                    fenetre.blit(mur, (x, y))
+                    window.blit(wall, (x, y))
                 elif sprite == '0':
-                    fenetre.blit(sol, (x, y))
+                    window.blit(floor, (x, y))
                 elif sprite == 'f':
-                    fenetre.blit(gardien, (x, y))
-                num_case += 1
-            num_ligne += 1
+                    window.blit(guard, (x, y))
+                sprite_nb += 1
+            line_nb += 1
 
     
-class Perso:
-    """Classe permettant de créer le personnage du jeu"""
-    def __init__(self, perso, niveau):
-        self.perso = pygame.image.load(perso).convert_alpha()
-        self.niveau = niveau
-        #Position en case et en pixels
-        self.case_x = 0
-        self.case_y = 0 
+class Player:
+    """Class to create a player"""
+    def __init__(self, player, level):
+        self.player = pygame.image.load(player).convert_alpha()
+        self.level = level
+        #Position en sprite et en pixels
+        self.sprite_x = 0
+        self.sprite_y = 0 
         self.x = 0
         self.y = 0
         self.ITEMS = []
     def deplacer(self, direction):
-        if direction == 'droite':
-            #On verifie qu'il ne sort pas de la map
-            if self.case_x < (nombre_sprite_cote - 1):
-                #On vérifie que ce ne soit pas un mur
-                if self.niveau.structure[self.case_y][self.case_x+1] != 'm':
-                    self.case_x += 1
-                    self.x = self.case_x * taille_sprite
+        if direction == 'right':
+            #We check MG doesn't get out of the map
+            if self.sprite_x < (number_of_sprite - 1):
+                #We check if the sprite is available
+                if self.level.structure[self.sprite_y][self.sprite_x+1] != 'm':
+                    self.sprite_x += 1
+                    self.x = self.sprite_x * sprite_size
             
 
-        if direction == 'gauche':
-            if self.case_x > 0:
-                if self.niveau.structure[self.case_y][self.case_x-1] != 'm':
-                    self.case_x -= 1
-                    self.x = self.case_x * taille_sprite
+        if direction == 'left':
+            if self.sprite_x > 0:
+                if self.level.structure[self.sprite_y][self.sprite_x-1] != 'm':
+                    self.sprite_x -= 1
+                    self.x = self.sprite_x * sprite_size
 
-        if direction == 'haut':
-            if self.case_y > 0:
-                if self.niveau.structure[self.case_y-1][self.case_x] != 'm':
-                    self.case_y -= 1
-                    self.y = self.case_y * taille_sprite
+        if direction == 'up':
+            if self.sprite_y > 0:
+                if self.level.structure[self.sprite_y-1][self.sprite_x] != 'm':
+                    self.sprite_y -= 1
+                    self.y = self.sprite_y * sprite_size
 
-        if direction == 'bas':
-            if self.case_y < (nombre_sprite_cote - 1):
-                if self.niveau.structure[self.case_y+1][self.case_x] != 'm':
-                    self.case_y += 1
-                    self.y = self.case_y * taille_sprite
+        if direction == 'down':
+            if self.sprite_y < (number_of_sprite - 1):
+                if self.level.structure[self.sprite_y+1][self.sprite_x] != 'm':
+                    self.sprite_y += 1
+                    self.y = self.sprite_y * sprite_size
 
     def check_item(self, name):
-        if self.niveau.structure[self.case_x][self.case_y] == 'aiguille':
-            self.niveau.structure[self.case_x][self.case_y] = '0'
-            self.ITEMS.append('aiguille')
+        if self.level.structure[self.sprite_x][self.sprite_y] == 'needle':
+            self.level.structure[self.sprite_x][self.sprite_y] = '0'
+            self.ITEMS.append('needle')
             print("Good you've got the needle")
             if len(self.ITEMS) == 3:
                 print("You can make the guard sleep with that seringe full of ether :)")
-        elif self.niveau.structure[self.case_x][self.case_y] == 'ether':
-            self.niveau.structure[self.case_x][self.case_y] = '0'
+        elif self.level.structure[self.sprite_x][self.sprite_y] == 'ether':
+            self.level.structure[self.sprite_x][self.sprite_y] = '0'
             self.ITEMS.append('ether')
             print("Nice! You've found some ether")
             if len(self.ITEMS) == 3:
                 print("You can make the guard sleep with that seringe full of ether :)")
-        elif self.niveau.structure[self.case_x][self.case_y] == 'tube':
-            self.niveau.structure[self.case_x][self.case_y] = '0'
+        elif self.level.structure[self.sprite_x][self.sprite_y] == 'tube':
+            self.level.structure[self.sprite_x][self.sprite_y] = '0'
             self.ITEMS.append('tube')
             print("You've got the tube you need to make the seringe")
             if len(self.ITEMS) == 3:
@@ -105,12 +105,11 @@ class Perso:
 
 class Item:
     """Classe permettant de placer les items sur la map"""
-    def __init__ (self, image,name, niveau):
+    def __init__ (self, image,name, level):
         self.image = pygame.image.load(image).convert_alpha()
-
-        self.niveau = niveau
-        self.case_x = 0 
-        self.case_y = 0 
+        self.level = level
+        self.sprite_x = 0 
+        self.sprite_y = 0 
         self.x = 0
         self.y = 0
         self.name = name
@@ -119,20 +118,20 @@ class Item:
     def place_item(self):
         position = []
         coordinates = ()
-        for k, ligne in enumerate(self.niveau.structure):
-            for j, case in enumerate(ligne):
-                if self.niveau.structure[k][j] == '0':
+        for k, line in enumerate(self.level.structure):
+            for j, sprite in enumerate(line):
+                if self.level.structure[k][j] == '0':
                     coordinates = (k, j)
                     position.append(coordinates)
 
         item_coordinates = random.choice(position)
-        self.case_y = item_coordinates[0]
-        self.case_x = item_coordinates[1]
-        self.x = self.case_x * taille_sprite
-        self.y = self.case_y * taille_sprite
-        self.niveau.structure[self.case_x][self.case_y] = self.name
+        self.sprite_y = item_coordinates[0]
+        self.sprite_x = item_coordinates[1]
+        self.x = self.sprite_x * sprite_size
+        self.y = self.sprite_y * sprite_size
+        self.level.structure[self.sprite_x][self.sprite_y] = self.name
 
         
-    def display_item(self, fenetre):
-        if self.niveau.structure[self.case_x][self.case_y] == self.name:
-            fenetre.blit(self.image, (self.x, self.y))            
+    def display_item(self, window):
+        if self.level.structure[self.sprite_x][self.sprite_y] == self.name:
+            window.blit(self.image, (self.x, self.y))            
