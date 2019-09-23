@@ -7,10 +7,10 @@ cote_fenetre = nombre_sprite_cote * taille_sprite
 titre_fenetre = "Get out MacGyver!!"
 
 #Ensemble des images
-image_mac = "images/MacGyver.png"
-image_guard = "images/Gardien.png"
+image_mac = "images/mg.png"
+image_guard = "images/guard.png"
 image_floor = "images/floor.png"
 image_wall = "images/wall.png"
-image_seringe = "images/aiguille.png"
+image_needle = "images/needle.png"
 image_ether = "images/ether.png"
-image_tube = "images/tube_plastique.png"
+image_tube = "images/tube.png"

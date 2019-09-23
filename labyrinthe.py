@@ -22,21 +22,23 @@ niveau = Map('niveau.txt')
 niveau.generer()
 niveau.afficher(fenetre)
 
-mg = Perso("images/MacGyver.png", niveau)
+mg = Perso(image_mac, niveau)
 fenetre.blit(mg.perso, (mg.x, mg.y))
 
-aiguille = Item("images/aiguille.png", "aiguille", niveau)
+aiguille = Item(image_needle, 'aiguille', niveau)
 aiguille.place_item()
 
-ether = Item("images/ether.png", "ether", niveau)
+
+ether = Item(image_ether, "ether", niveau)
 ether.place_item()
 
-tube = Item("images/tube_plastique.png", "tube", niveau)
+
+tube = Item(image_tube, "tube", niveau)
 tube.place_item()
+
 
 continuer = 1
 while continuer:
-    ITEMS = []
     pygame.time.Clock().tick(30)
 
     for event in pygame.event.get():
@@ -57,16 +59,21 @@ while continuer:
                 mg.deplacer('bas')
 
     niveau.afficher(fenetre)
+    aiguille.display_item(fenetre)
+    ether.display_item(fenetre)
+    tube.display_item(fenetre)
+    mg.check_item(aiguille)
+    mg.check_item(ether)
+    mg.check_item(tube)
     fenetre.blit(mg.perso, (mg.x, mg.y))
-    aiguille.get_item(fenetre, mg, ITEMS)
-    ether.get_item(fenetre, mg, ITEMS)
-    tube.get_item(fenetre, mg, ITEMS)
     pygame.display.flip()
 
+
+
     if niveau.structure[mg.case_x][mg.case_y] == 'f':
-        if len(ITEMS) < 2:
-            print("you lose")
-            continuer = 0
-        if len(ITEMS) == 3:
-            print("you win")
-            continuer = 0
+    	if len(mg.ITEMS) < 3:
+    		continuer = 0
+    		print("you lose")
+    	elif len(mg.ITEMS) == 3:
+    		continuer = 0
+    		print("you win")
