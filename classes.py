@@ -9,7 +9,7 @@ class Map:
 	"""Classe permettant de créer la map"""
 	def __init__(self,fichier):
 		self.fichier = fichier
-		self.structure = 0
+		self.structure = []
 	
 	def generer(self):
 		with open(self.fichier, "r") as fichier:
