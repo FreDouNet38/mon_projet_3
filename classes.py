@@ -4,6 +4,7 @@ import pygame
 from pygame.locals import *
 from constantes import *
 import random
+import time
 
 class Map:
     """Class which allow the creation of the map"""
@@ -54,7 +55,7 @@ class Player:
         self.x = 0
         self.y = 0
         self.ITEMS = []
-    def deplacer(self, direction):
+    def move(self, direction):
         if direction == 'right':
             #We check MG doesn't get out of the map
             if self.sprite_x < (number_of_sprite - 1):
@@ -82,26 +83,49 @@ class Player:
                     self.sprite_y += 1
                     self.y = self.sprite_y * sprite_size
 
-    def check_item(self, name):
+    def check_item(self, name, window):
+        gotneedle = pygame.image.load(got_needle).convert_alpha()
+        gottube = pygame.image.load(got_tube).convert_alpha()
+        gotether = pygame.image.load(got_ether).convert_alpha()
+        
+
         if self.level.structure[self.sprite_x][self.sprite_y] == 'needle':
             self.level.structure[self.sprite_x][self.sprite_y] = '0'
             self.ITEMS.append('needle')
-            print("Good you've got the needle")
-            if len(self.ITEMS) == 3:
-                print("You can make the guard sleep with that seringe full of ether :)")
+            window.blit(gotneedle, (20, 50))
+            pygame.display.flip()
+            time.sleep(1)
+
         elif self.level.structure[self.sprite_x][self.sprite_y] == 'ether':
             self.level.structure[self.sprite_x][self.sprite_y] = '0'
             self.ITEMS.append('ether')
-            print("Nice! You've found some ether")
-            if len(self.ITEMS) == 3:
-                print("You can make the guard sleep with that seringe full of ether :)")
+            window.blit(gotether, (20, 50))
+            pygame.display.flip()
+            time.sleep(1)
+            
         elif self.level.structure[self.sprite_x][self.sprite_y] == 'tube':
             self.level.structure[self.sprite_x][self.sprite_y] = '0'
             self.ITEMS.append('tube')
-            print("You've got the tube you need to make the seringe")
-            if len(self.ITEMS) == 3:
-                print("You can make the guard sleep with that seringe full of ether :)")
+            window.blit(gottube, (20, 50))
+            pygame.display.flip()
+            time.sleep(1)
 
+    def end(self, level, window):
+        gotall = pygame.image.load(got_all).convert_alpha() 
+        loser = pygame.image.load(lose).convert_alpha()
+
+        if level.structure[self.sprite_x][self.sprite_y] == 'f':
+            if len(self.ITEMS) < 3:
+                window.blit(loser, (20, 50))
+                pygame.display.flip()
+                time.sleep(2)
+                exit()
+            elif len(self.ITEMS) == 3:
+                window.blit(gotall, (20, 50))
+                pygame.display.flip()
+                time.sleep(2)
+                exit()
+            
 
 class Item:
     """Classe permettant de placer les items sur la map"""
