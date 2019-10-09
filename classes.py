@@ -2,7 +2,7 @@
 
 import pygame
 from pygame.locals import *
-from constantes import *
+from constants import *
 import random
 import time
 
@@ -13,6 +13,7 @@ class Map:
         self.structure = []
     
     def generate(self):
+        """Create lists from the level.txt"""
         with open(self.folder, "r") as folder:
             level_structure = []
             for line in folder:
@@ -24,6 +25,7 @@ class Map:
             self.structure = level_structure
 
     def show(self, window):
+        """From the lists generated above it creates a map with the different images"""
         wall = pygame.image.load(image_wall).convert_alpha()
         floor = pygame.image.load(image_floor).convert_alpha()
         guard = pygame.image.load(image_guard).convert_alpha()
@@ -55,7 +57,9 @@ class Player:
         self.x = 0
         self.y = 0
         self.ITEMS = []
+
     def move(self, direction):
+        """Function which deals with the player's movements"""
         if direction == 'right':
             #We check MG doesn't get out of the map
             if self.sprite_x < (number_of_sprite - 1):
@@ -84,6 +88,7 @@ class Player:
                     self.y = self.sprite_y * sprite_size
 
     def check_item(self, name, window):
+        """Here we check if the player is on a sprite already occupied by an item"""
         gotneedle = pygame.image.load(got_needle).convert_alpha()
         gottube = pygame.image.load(got_tube).convert_alpha()
         gotether = pygame.image.load(got_ether).convert_alpha()
@@ -111,6 +116,7 @@ class Player:
             time.sleep(1)
 
     def end(self, level, window):
+        """We check here if the player has what's necessary to win"""
         gotall = pygame.image.load(got_all).convert_alpha() 
         loser = pygame.image.load(lose).convert_alpha()
 
@@ -128,7 +134,7 @@ class Player:
             
 
 class Item:
-    """Classe permettant de placer les items sur la map"""
+    """Classwhich place the items on the map"""
     def __init__ (self, image,name, level):
         self.image = pygame.image.load(image).convert_alpha()
         self.level = level
@@ -140,6 +146,7 @@ class Item:
     
 
     def place_item(self):
+        """Creates a list of all the free sprites and place the items at those coordinates"""
         position = []
         coordinates = ()
         for k, line in enumerate(self.level.structure):
@@ -157,5 +164,7 @@ class Item:
 
         
     def display_item(self, window):
+        """Place the image of the item"""
         if self.level.structure[self.sprite_x][self.sprite_y] == self.name:
-            window.blit(self.image, (self.x, self.y))            
+            window.blit(self.image, (self.x, self.y))
+            pygame.display.flip()           

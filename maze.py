@@ -5,7 +5,7 @@
 
 import pygame
 from pygame.locals import *
-from constantes import *
+from constants import *
 from classes import *
 import random
 
@@ -17,7 +17,7 @@ def main():
     pygame.display.set_caption(window_title)
 
     #To display the level
-    level = Map('niveau.txt')
+    level = Map('level.txt')
     level.generate()
     level.show(window)
 
@@ -58,16 +58,15 @@ def main():
                     mg.move('down')
 
         level.show(window)
-        needle.display_item(window)
-        ether.display_item(window)
-        tube.display_item(window)
         mg.check_item(needle, window)
         mg.check_item(ether, window)
         mg.check_item(tube, window)
-        mg.end(level, window)
         window.blit(mg.player, (mg.x, mg.y))
+        needle.display_item(window)
+        ether.display_item(window)
+        tube.display_item(window)
+        mg.end(level, window)        
         pygame.display.flip()
 
 if __name__ == '__main__':
     main()
-
