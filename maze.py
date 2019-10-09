@@ -7,11 +7,11 @@ import pygame
 from pygame.locals import *
 from constants import *
 from classes import *
-import random
 
 pygame.init()
 
 def main():
+    """The main function"""
     #To open the window
     window = pygame.display.set_mode((side, side))
     pygame.display.set_caption(window_title)
@@ -42,7 +42,7 @@ def main():
 
         for event in pygame.event.get():
             if event.type == QUIT:
-                exit()
+                sys.exit()
 
             elif event.type == KEYDOWN:
                 if event.key == K_RIGHT:
@@ -65,7 +65,7 @@ def main():
         needle.display_item(window)
         ether.display_item(window)
         tube.display_item(window)
-        mg.end(level, window)        
+        mg.end(level, window)
         pygame.display.flip()
 
 if __name__ == '__main__':

@@ -166,5 +166,4 @@ class Item:
     def display_item(self, window):
         """Place the image of the item"""
         if self.level.structure[self.sprite_x][self.sprite_y] == self.name:
-            window.blit(self.image, (self.x, self.y))
-            pygame.display.flip()           
+            window.blit(self.image, (self.x, self.y))           
