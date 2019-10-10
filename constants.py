@@ -1,21 +1,21 @@
 """The game's constants"""
 
 #Paramètre de la fenêtre
-number_of_sprite = 15
-sprite_size = 30
-side = number_of_sprite * sprite_size
-window_title = "Get out MacGyver!!"
+NUMBER_OF_SPRITE = 15
+SPRITE_SIZE = 30
+SIDE = NUMBER_OF_SPRITE * SPRITE_SIZE
+WINDOW_TITLE = "Get out MacGyver!!"
 
 #Ensemble des images
-image_mac = "images/mg.png"
-image_guard = "images/guard.png"
-image_floor = "images/floor.png"
-image_wall = "images/wall.png"
-image_needle = "images/needle.png"
-image_ether = "images/ether.png"
-image_tube = "images/tube.png"
-got_needle = "images/needlepicked.png"
-got_ether = "images/etherpicked.png"
-got_tube = "images/tubepicked.png"
-got_all = "images/allpicked.png"
-lose = "images/loser.png"
+IMAGE_MAC = "images/mg.png"
+IMAGE_GUARD = "images/guard.png"
+IMAGE_FLOOR = "images/floor.png"
+IMAGE_WALL = "images/wall.png"
+IMAGE_NEEDLE = "images/needle.png"
+IMAGE_ETHER = "images/ether.png"
+IMAGE_TUBE = "images/tube.png"
+GOT_NEEDLE = "images/needlepicked.png"
+GOT_ETHER = "images/etherpicked.png"
+GOT_TUBE = "images/tubepicked.png"
+GOT_ALL = "images/allpicked.png"
+LOSE = "images/loser.png"

@@ -2,16 +2,17 @@
 
 import pygame
 from pygame.locals import *
-from constants import *
+from constants import NUMBER_OF_SPRITE, SPRITE_SIZE, IMAGE_WALL, IMAGE_FLOOR, IMAGE_GUARD
+from constants import GOT_NEEDLE, GOT_TUBE, GOT_ETHER, GOT_ALL, LOSE
 import random
 import time
 
 class Map:
     """Class which allow the creation of the map"""
-    def __init__(self,folder):
+    def __init__(self, folder):
         self.folder = folder
         self.structure = []
-    
+
     def generate(self):
         """Create lists from the level.txt"""
         with open(self.folder, "r") as folder:
@@ -23,34 +24,19 @@ class Map:
                         level_line.append(sprite)
                 level_structure.append(level_line)
             self.structure = level_structure
-            print(level_structure[0])
-            print(level_structure[1])
-            print(level_structure[2])
-            print(level_structure[3])
-            print(level_structure[4])
-            print(level_structure[5])
-            print(level_structure[6])
-            print(level_structure[7])
-            print(level_structure[8])
-            print(level_structure[9])
-            print(level_structure[10])
-            print(level_structure[11])
-            print(level_structure[12])
-            print(level_structure[13])
-            print(level_structure[14])
 
     def show(self, window):
         """From the lists generated above it creates a map with the different images"""
-        wall = pygame.image.load(image_wall).convert_alpha()
-        floor = pygame.image.load(image_floor).convert_alpha()
-        guard = pygame.image.load(image_guard).convert_alpha()
+        wall = pygame.image.load(IMAGE_WALL).convert_alpha()
+        floor = pygame.image.load(IMAGE_FLOOR).convert_alpha()
+        guard = pygame.image.load(IMAGE_GUARD).convert_alpha()
 
         line_nb = 0
         for line in self.structure:
             sprite_nb = 0
             for sprite in line:
-                x = sprite_nb * sprite_size
-                y = line_nb * sprite_size
+                x = sprite_nb * SPRITE_SIZE
+                y = line_nb * SPRITE_SIZE
                 if sprite == 'm':
                     window.blit(wall, (x, y))
                 elif sprite == '0':
@@ -60,7 +46,7 @@ class Map:
                 sprite_nb += 1
             line_nb += 1
 
-    
+
 class Player:
     """Class to create a player"""
     def __init__(self, player, level):
@@ -68,7 +54,7 @@ class Player:
         self.level = level
         #Position en sprite et en pixels
         self.sprite_x = 0
-        self.sprite_y = 0 
+        self.sprite_y = 0
         self.x = 0
         self.y = 0
         self.ITEMS = []
@@ -77,60 +63,57 @@ class Player:
         """Function which deals with the player's movements"""
         if direction == 'right':
             #We check MG doesn't get out of the map
-            if self.sprite_x < (number_of_sprite - 1):
+            if self.sprite_x < (NUMBER_OF_SPRITE - 1):
                 #We check if the sprite is available
                 if self.level.structure[self.sprite_y][self.sprite_x+1] != 'm':
                     self.sprite_x += 1
-                    self.x = self.sprite_x * sprite_size
-            
+                    self.x = self.sprite_x * SPRITE_SIZE
 
         if direction == 'left':
             if self.sprite_x > 0:
                 if self.level.structure[self.sprite_y][self.sprite_x-1] != 'm':
                     self.sprite_x -= 1
-                    self.x = self.sprite_x * sprite_size
+                    self.x = self.sprite_x * SPRITE_SIZE
 
         if direction == 'up':
             if self.sprite_y > 0:
                 if self.level.structure[self.sprite_y-1][self.sprite_x] != 'm':
                     self.sprite_y -= 1
-                    self.y = self.sprite_y * sprite_size
+                    self.y = self.sprite_y * SPRITE_SIZE
 
         if direction == 'down':
-            if self.sprite_y < (number_of_sprite - 1):
+            if self.sprite_y < (NUMBER_OF_SPRITE - 1):
                 if self.level.structure[self.sprite_y+1][self.sprite_x] != 'm':
                     self.sprite_y += 1
-                    self.y = self.sprite_y * sprite_size
+                    self.y = self.sprite_y * SPRITE_SIZE
 
-    def check_item(self, name, window):
+    def check_item(self, window):
         """Here we check if the player is on a sprite already occupied by an item"""
-        gotneedle = pygame.image.load(got_needle).convert_alpha()
-        gottube = pygame.image.load(got_tube).convert_alpha()
-        gotether = pygame.image.load(got_ether).convert_alpha()
-        
+        gotneedle = pygame.image.load(GOT_NEEDLE).convert_alpha()
+        gottube = pygame.image.load(GOT_TUBE).convert_alpha()
+        gotether = pygame.image.load(GOT_ETHER).convert_alpha()
+
 
         if self.level.structure[self.sprite_x][self.sprite_y] == 'needle':
-            self.level.structure[self.sprite_x][self.sprite_y] = 'm'
+            self.level.structure[self.sprite_x][self.sprite_y] = '0'
             self.ITEMS.append('needle')
             window.blit(gotneedle, (20, 50))
-            
 
         elif self.level.structure[self.sprite_x][self.sprite_y] == 'ether':
-            self.level.structure[self.sprite_x][self.sprite_y] = 'm'
+            self.level.structure[self.sprite_x][self.sprite_y] = '0'
             self.ITEMS.append('ether')
             window.blit(gotether, (20, 50))
-            
-            
+
         elif self.level.structure[self.sprite_x][self.sprite_y] == 'tube':
-            self.level.structure[self.sprite_x][self.sprite_y] = 'm'
+            self.level.structure[self.sprite_x][self.sprite_y] = '0'
             self.ITEMS.append('tube')
             window.blit(gottube, (20, 50))
            
 
     def end(self, level, window):
         """We check here if the player has what's necessary to win"""
-        gotall = pygame.image.load(got_all).convert_alpha() 
-        loser = pygame.image.load(lose).convert_alpha()
+        gotall = pygame.image.load(GOT_ALL).convert_alpha() 
+        loser = pygame.image.load(LOSE).convert_alpha()
 
         if level.structure[self.sprite_x][self.sprite_y] == 'f':
             if len(self.ITEMS) < 3:
@@ -147,7 +130,7 @@ class Player:
 
 class Item:
     """Classwhich place the items on the map"""
-    def __init__ (self, image,name, level):
+    def __init__ (self, image, name, level):
         self.image = pygame.image.load(image).convert_alpha()
         self.level = level
         self.sprite_x = 0 
@@ -170,8 +153,8 @@ class Item:
         item_coordinates = random.choice(position)
         self.sprite_y = item_coordinates[0]
         self.sprite_x = item_coordinates[1]
-        self.x = self.sprite_x * sprite_size
-        self.y = self.sprite_y * sprite_size
+        self.x = self.sprite_x * SPRITE_SIZE
+        self.y = self.sprite_y * SPRITE_SIZE
         self.level.structure[self.sprite_x][self.sprite_y] = self.name
 
         
