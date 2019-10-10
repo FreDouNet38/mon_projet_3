@@ -42,7 +42,7 @@ def main():
 
         for event in pygame.event.get():
             if event.type == QUIT:
-                sys.exit()
+                return
 
             elif event.type == KEYDOWN:
                 if event.key == K_RIGHT:
@@ -57,16 +57,17 @@ def main():
                 elif event.key == K_DOWN:
                     mg.move('down')
 
+
         level.show(window)
+        window.blit(mg.player, (mg.x, mg.y))
         mg.check_item(needle, window)
         mg.check_item(ether, window)
-        mg.check_item(tube, window)
-        window.blit(mg.player, (mg.x, mg.y))
+        mg.check_item(tube, window)       
         needle.display_item(window)
         ether.display_item(window)
         tube.display_item(window)
+        pygame.display.update()
         mg.end(level, window)
-        pygame.display.flip()
 
 if __name__ == '__main__':
     main()

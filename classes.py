@@ -23,6 +23,21 @@ class Map:
                         level_line.append(sprite)
                 level_structure.append(level_line)
             self.structure = level_structure
+            print(level_structure[0])
+            print(level_structure[1])
+            print(level_structure[2])
+            print(level_structure[3])
+            print(level_structure[4])
+            print(level_structure[5])
+            print(level_structure[6])
+            print(level_structure[7])
+            print(level_structure[8])
+            print(level_structure[9])
+            print(level_structure[10])
+            print(level_structure[11])
+            print(level_structure[12])
+            print(level_structure[13])
+            print(level_structure[14])
 
     def show(self, window):
         """From the lists generated above it creates a map with the different images"""
@@ -95,25 +110,22 @@ class Player:
         
 
         if self.level.structure[self.sprite_x][self.sprite_y] == 'needle':
-            self.level.structure[self.sprite_x][self.sprite_y] = '0'
+            self.level.structure[self.sprite_x][self.sprite_y] = 'm'
             self.ITEMS.append('needle')
             window.blit(gotneedle, (20, 50))
-            pygame.display.flip()
-            time.sleep(1)
+            
 
         elif self.level.structure[self.sprite_x][self.sprite_y] == 'ether':
-            self.level.structure[self.sprite_x][self.sprite_y] = '0'
+            self.level.structure[self.sprite_x][self.sprite_y] = 'm'
             self.ITEMS.append('ether')
             window.blit(gotether, (20, 50))
-            pygame.display.flip()
-            time.sleep(1)
+            
             
         elif self.level.structure[self.sprite_x][self.sprite_y] == 'tube':
-            self.level.structure[self.sprite_x][self.sprite_y] = '0'
+            self.level.structure[self.sprite_x][self.sprite_y] = 'm'
             self.ITEMS.append('tube')
             window.blit(gottube, (20, 50))
-            pygame.display.flip()
-            time.sleep(1)
+           
 
     def end(self, level, window):
         """We check here if the player has what's necessary to win"""
@@ -166,4 +178,4 @@ class Item:
     def display_item(self, window):
         """Place the image of the item"""
         if self.level.structure[self.sprite_x][self.sprite_y] == self.name:
-            window.blit(self.image, (self.x, self.y))           
+            window.blit(self.image, (self.x, self.y))
