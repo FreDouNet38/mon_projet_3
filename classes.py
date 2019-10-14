@@ -52,7 +52,7 @@ class Player:
     def __init__(self, player, level):
         self.player = pygame.image.load(player).convert_alpha()
         self.level = level
-        #Position en sprite et en pixels
+        #Position in sprite and pixels
         self.sprite_x = 0
         self.sprite_y = 0
         self.x = 0
@@ -87,25 +87,24 @@ class Player:
                     self.sprite_y += 1
                     self.y = self.sprite_y * SPRITE_SIZE
 
-    def check_item(self, window):
+    def chck_item(self, window, mg):
         """Here we check if the player is on a sprite already occupied by an item"""
         gotneedle = pygame.image.load(GOT_NEEDLE).convert_alpha()
         gottube = pygame.image.load(GOT_TUBE).convert_alpha()
         gotether = pygame.image.load(GOT_ETHER).convert_alpha()
 
-
         if self.level.structure[self.sprite_x][self.sprite_y] == 'needle':
-            self.level.structure[self.sprite_x][self.sprite_y] = '0'
+            self.level.structure[mg.sprite_x][mg.sprite_y] = 'm'
             self.ITEMS.append('needle')
             window.blit(gotneedle, (20, 50))
 
-        elif self.level.structure[self.sprite_x][self.sprite_y] == 'ether':
-            self.level.structure[self.sprite_x][self.sprite_y] = '0'
+        elif self.level.structure[mg.sprite_x][mg.sprite_y] == 'ether':
+            self.level.structure[self.sprite_x][self.sprite_y] = 'm'
             self.ITEMS.append('ether')
             window.blit(gotether, (20, 50))
 
-        elif self.level.structure[self.sprite_x][self.sprite_y] == 'tube':
-            self.level.structure[self.sprite_x][self.sprite_y] = '0'
+        elif self.level.structure[mg.sprite_x][mg.sprite_y] == 'tube':
+            self.level.structure[self.sprite_x][self.sprite_y] = 'm'
             self.ITEMS.append('tube')
             window.blit(gottube, (20, 50))
            
@@ -162,3 +161,24 @@ class Item:
         """Place the image of the item"""
         if self.level.structure[self.sprite_x][self.sprite_y] == self.name:
             window.blit(self.image, (self.x, self.y))
+
+    def check_item(self, window, mg):
+        """Here we check if the player is on a sprite already occupied by an item"""
+        gotneedle = pygame.image.load(GOT_NEEDLE).convert_alpha()
+        gottube = pygame.image.load(GOT_TUBE).convert_alpha()
+        gotether = pygame.image.load(GOT_ETHER).convert_alpha()
+
+        if self.level.structure[mg.sprite_x][mg.sprite_y] == 'needle':
+            self.level.structure[self.sprite_x][self.sprite_y] = 'm'
+            """self.ITEMS.append('needle')"""
+            window.blit(gotneedle, (20, 50))
+
+        elif self.level.structure[mg.sprite_x][mg.sprite_y] == 'ether':
+            self.level.structure[self.sprite_x][self.sprite_y] = 'm'
+            """self.ITEMS.append('ether')"""
+            window.blit(gotether, (20, 50))
+
+        elif self.level.structure[mg.sprite_x][mg.sprite_y] == 'tube':
+            self.level.structure[self.sprite_x][self.sprite_y] = 'm'
+            """self.ITEMS.append('tube')"""
+            window.blit(gottube, (20, 50))

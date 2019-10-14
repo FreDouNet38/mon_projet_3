@@ -5,7 +5,7 @@
 
 import pygame
 from pygame.locals import *
-from constants import *
+from constants import SIDE, WINDOW_TITLE, IMAGE_MAC, IMAGE_NEEDLE, IMAGE_ETHER, IMAGE_TUBE
 from classes import *
 
 pygame.init()
@@ -13,8 +13,8 @@ pygame.init()
 def main():
     """The main function"""
     #To open the window
-    window = pygame.display.set_mode((side, side))
-    pygame.display.set_caption(window_title)
+    window = pygame.display.set_mode((SIDE, SIDE))
+    pygame.display.set_caption(WINDOW_TITLE)
 
     #To display the level
     level = Map('level.txt')
@@ -22,17 +22,17 @@ def main():
     level.show(window)
 
     #To display MacGyver
-    mg = Player(image_mac, level)
+    mg = Player(IMAGE_MAC, level)
     window.blit(mg.player, (mg.x, mg.y))
 
     #To display the items
-    needle = Item(image_needle, "needle", level)
+    needle = Item(IMAGE_NEEDLE, "needle", level)
     needle.place_item()
 
-    ether = Item(image_ether, "ether", level)
+    ether = Item(IMAGE_ETHER, "ether", level)
     ether.place_item()
 
-    tube = Item(image_tube, "tube", level)
+    tube = Item(IMAGE_TUBE, "tube", level)
     tube.place_item()
 
 
@@ -59,14 +59,14 @@ def main():
 
 
         level.show(window)
-        window.blit(mg.player, (mg.x, mg.y))
-        mg.check_item(needle, window)
-        mg.check_item(ether, window)
-        mg.check_item(tube, window)       
+        window.blit(mg.player, (mg.x, mg.y))       
         needle.display_item(window)
         ether.display_item(window)
         tube.display_item(window)
-        pygame.display.update()
+        needle.check_item(window, mg)
+        tube.check_item(window, mg)
+        ether.check_item(window, mg)
+        pygame.display.flip()
         mg.end(level, window)
 
 if __name__ == '__main__':
