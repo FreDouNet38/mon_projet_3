@@ -1,11 +1,14 @@
 """The labyritnh's classes"""
 
-import pygame
-from pygame.locals import *
-from constants import NUMBER_OF_SPRITE, SPRITE_SIZE, IMAGE_WALL, IMAGE_FLOOR, IMAGE_GUARD
-from constants import GOT_NEEDLE, GOT_TUBE, GOT_ETHER, GOT_ALL, LOSE
+#pylint: disable=invalid-name
+
 import random
 import time
+from pygame.locals import *
+import pygame
+from constants import NUMBER_OF_SPRITE, SPRITE_SIZE, IMAGE_WALL, IMAGE_FLOOR, IMAGE_GUARD
+from constants import GOT_NEEDLE, GOT_TUBE, GOT_ETHER, GOT_ALL, LOSE
+
 
 class Map:
     """Class which allow the creation of the map"""
@@ -87,31 +90,36 @@ class Player:
                     self.sprite_y += 1
                     self.y = self.sprite_y * SPRITE_SIZE
 
-    def chck_item(self, window, mg):
+    def check_item(self, window, mg):
         """Here we check if the player is on a sprite already occupied by an item"""
         gotneedle = pygame.image.load(GOT_NEEDLE).convert_alpha()
         gottube = pygame.image.load(GOT_TUBE).convert_alpha()
         gotether = pygame.image.load(GOT_ETHER).convert_alpha()
 
         if self.level.structure[self.sprite_x][self.sprite_y] == 'needle':
-            self.level.structure[mg.sprite_x][mg.sprite_y] = 'm'
+            self.level.structure[mg.sprite_x][mg.sprite_y] = '0'
             self.ITEMS.append('needle')
             window.blit(gotneedle, (20, 50))
+            pygame.display.flip()
+            time.sleep(1)
 
         elif self.level.structure[mg.sprite_x][mg.sprite_y] == 'ether':
-            self.level.structure[self.sprite_x][self.sprite_y] = 'm'
+            self.level.structure[self.sprite_x][self.sprite_y] = '0'
             self.ITEMS.append('ether')
             window.blit(gotether, (20, 50))
+            pygame.display.flip()
+            time.sleep(1)
 
         elif self.level.structure[mg.sprite_x][mg.sprite_y] == 'tube':
-            self.level.structure[self.sprite_x][self.sprite_y] = 'm'
+            self.level.structure[self.sprite_x][self.sprite_y] = '0'
             self.ITEMS.append('tube')
             window.blit(gottube, (20, 50))
-           
+            pygame.display.flip()
+            time.sleep(1)
 
     def end(self, level, window):
         """We check here if the player has what's necessary to win"""
-        gotall = pygame.image.load(GOT_ALL).convert_alpha() 
+        gotall = pygame.image.load(GOT_ALL).convert_alpha()
         loser = pygame.image.load(LOSE).convert_alpha()
 
         if level.structure[self.sprite_x][self.sprite_y] == 'f':
@@ -125,19 +133,18 @@ class Player:
                 pygame.display.flip()
                 time.sleep(2)
                 exit()
-            
 
 class Item:
     """Classwhich place the items on the map"""
-    def __init__ (self, image, name, level):
+    def __init__(self, image, name, level):
         self.image = pygame.image.load(image).convert_alpha()
         self.level = level
-        self.sprite_x = 0 
-        self.sprite_y = 0 
+        self.sprite_x = 0
+        self.sprite_y = 0
         self.x = 0
         self.y = 0
         self.name = name
-    
+
 
     def place_item(self):
         """Creates a list of all the free sprites and place the items at those coordinates"""
@@ -156,29 +163,8 @@ class Item:
         self.y = self.sprite_y * SPRITE_SIZE
         self.level.structure[self.sprite_x][self.sprite_y] = self.name
 
-        
+
     def display_item(self, window):
         """Place the image of the item"""
         if self.level.structure[self.sprite_x][self.sprite_y] == self.name:
             window.blit(self.image, (self.x, self.y))
-
-    def check_item(self, window, mg):
-        """Here we check if the player is on a sprite already occupied by an item"""
-        gotneedle = pygame.image.load(GOT_NEEDLE).convert_alpha()
-        gottube = pygame.image.load(GOT_TUBE).convert_alpha()
-        gotether = pygame.image.load(GOT_ETHER).convert_alpha()
-
-        if self.level.structure[mg.sprite_x][mg.sprite_y] == 'needle':
-            self.level.structure[self.sprite_x][self.sprite_y] = 'm'
-            """self.ITEMS.append('needle')"""
-            window.blit(gotneedle, (20, 50))
-
-        elif self.level.structure[mg.sprite_x][mg.sprite_y] == 'ether':
-            self.level.structure[self.sprite_x][self.sprite_y] = 'm'
-            """self.ITEMS.append('ether')"""
-            window.blit(gotether, (20, 50))
-
-        elif self.level.structure[mg.sprite_x][mg.sprite_y] == 'tube':
-            self.level.structure[self.sprite_x][self.sprite_y] = 'm'
-            """self.ITEMS.append('tube')"""
-            window.blit(gottube, (20, 50))

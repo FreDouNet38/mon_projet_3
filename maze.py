@@ -1,6 +1,8 @@
 #!/usr/bin/python3
 # -*- coding: Utf-8 -*
 
+#pylint: disable=wildcard-import, no-member, undefined-variable, unused-wildcard-import, invalid-name
+
 """ The labyrinth game """
 
 import pygame
@@ -44,7 +46,7 @@ def main():
             if event.type == QUIT:
                 return
 
-            elif event.type == KEYDOWN:
+            if event.type == KEYDOWN:
                 if event.key == K_RIGHT:
                     mg.move('right')
 
@@ -59,13 +61,11 @@ def main():
 
 
         level.show(window)
-        window.blit(mg.player, (mg.x, mg.y))       
+        window.blit(mg.player, (mg.x, mg.y))
         needle.display_item(window)
         ether.display_item(window)
         tube.display_item(window)
-        needle.check_item(window, mg)
-        tube.check_item(window, mg)
-        ether.check_item(window, mg)
+        mg.check_item(window, mg)
         pygame.display.flip()
         mg.end(level, window)
 

@@ -1,5 +1,8 @@
 # mon_projet_3
 
+J'ai réalisé ce jeu pour mon troisième projet avec OpenClassrooms.
+J'ai utilisé le module pygame.
+
 This is the to do list for the 3rd project
 
 - initialiser un repo git    CHECK
