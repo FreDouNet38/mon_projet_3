@@ -60,14 +60,22 @@ def main():
                     mg.move('down')
 
 
-        level.show(window)
-        window.blit(mg.player, (mg.x, mg.y))
         needle.display_item(window)
         ether.display_item(window)
         tube.display_item(window)
-        mg.check_item(window, mg)
-        pygame.display.flip()
+        mg.check_item(window)
         mg.end(level, window)
+
+
+        level.show(window)
+        window.blit(mg.player, (mg.x, mg.y))
+        pygame.display.flip()
+
+
+
+
+
+
 
 if __name__ == '__main__':
     main()

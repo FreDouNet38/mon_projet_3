@@ -90,28 +90,28 @@ class Player:
                     self.sprite_y += 1
                     self.y = self.sprite_y * SPRITE_SIZE
 
-    def check_item(self, window, mg):
+    def check_item(self, window):
         """Here we check if the player is on a sprite already occupied by an item"""
         gotneedle = pygame.image.load(GOT_NEEDLE).convert_alpha()
         gottube = pygame.image.load(GOT_TUBE).convert_alpha()
         gotether = pygame.image.load(GOT_ETHER).convert_alpha()
 
-        if self.level.structure[self.sprite_x][self.sprite_y] == 'needle':
-            self.level.structure[mg.sprite_x][mg.sprite_y] = '0'
+        if self.level.structure[self.sprite_y][self.sprite_x] == 'needle':
+            self.level.structure[self.sprite_y][self.sprite_x] = '0'
             self.ITEMS.append('needle')
             window.blit(gotneedle, (20, 50))
             pygame.display.flip()
             time.sleep(1)
 
-        elif self.level.structure[mg.sprite_x][mg.sprite_y] == 'ether':
-            self.level.structure[self.sprite_x][self.sprite_y] = '0'
+        elif self.level.structure[self.sprite_y][self.sprite_x] == 'ether':
+            self.level.structure[self.sprite_y][self.sprite_x] = '0'
             self.ITEMS.append('ether')
             window.blit(gotether, (20, 50))
             pygame.display.flip()
             time.sleep(1)
 
-        elif self.level.structure[mg.sprite_x][mg.sprite_y] == 'tube':
-            self.level.structure[self.sprite_x][self.sprite_y] = '0'
+        elif self.level.structure[self.sprite_y][self.sprite_x] == 'tube':
+            self.level.structure[self.sprite_y][self.sprite_x] = '0'
             self.ITEMS.append('tube')
             window.blit(gottube, (20, 50))
             pygame.display.flip()
@@ -122,7 +122,7 @@ class Player:
         gotall = pygame.image.load(GOT_ALL).convert_alpha()
         loser = pygame.image.load(LOSE).convert_alpha()
 
-        if level.structure[self.sprite_x][self.sprite_y] == 'f':
+        if level.structure[self.sprite_y][self.sprite_x] == 'f':
             if len(self.ITEMS) < 3:
                 window.blit(loser, (20, 50))
                 pygame.display.flip()
@@ -152,19 +152,19 @@ class Item:
         coordinates = ()
         for k, line in enumerate(self.level.structure):
             for j, sprite in enumerate(line):
-                if self.level.structure[k][j] == '0':
+                if sprite == '0':
                     coordinates = (k, j)
                     position.append(coordinates)
 
         item_coordinates = random.choice(position)
         self.sprite_y = item_coordinates[0]
         self.sprite_x = item_coordinates[1]
-        self.x = self.sprite_x * SPRITE_SIZE
         self.y = self.sprite_y * SPRITE_SIZE
-        self.level.structure[self.sprite_x][self.sprite_y] = self.name
+        self.x = self.sprite_x * SPRITE_SIZE
+        self.level.structure[self.sprite_y][self.sprite_x] = self.name
 
 
     def display_item(self, window):
         """Place the image of the item"""
-        if self.level.structure[self.sprite_x][self.sprite_y] == self.name:
+        if self.level.structure[self.sprite_y][self.sprite_x] == self.name:
             window.blit(self.image, (self.x, self.y))
