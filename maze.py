@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 # -*- coding: Utf-8 -*
 
-#pylint: disable=wildcard-import, no-member, undefined-variable, unused-wildcard-import, invalid-name
+#pylint: disable=wildcard-import, no-member, unused-wildcard-import, undefined-variable
 
 """ The labyrinth game """
 
@@ -24,8 +24,8 @@ def main():
     level.show(window)
 
     #To display MacGyver
-    mg = Player(IMAGE_MAC, level)
-    window.blit(mg.player, (mg.x, mg.y))
+    macgyver = Player(IMAGE_MAC, level)
+    window.blit(macgyver.player, (macgyver.x, macgyver.y))
 
     #To display the items
     needle = Item(IMAGE_NEEDLE, "needle", level)
@@ -48,34 +48,25 @@ def main():
 
             if event.type == KEYDOWN:
                 if event.key == K_RIGHT:
-                    mg.move('right')
+                    macgyver.move('right')
 
                 elif event.key == K_LEFT:
-                    mg.move('left')
+                    macgyver.move('left')
 
                 elif event.key == K_UP:
-                    mg.move('up')
+                    macgyver.move('up')
 
                 elif event.key == K_DOWN:
-                    mg.move('down')
+                    macgyver.move('down')
 
-
+        level.show(window)
         needle.display_item(window)
         ether.display_item(window)
         tube.display_item(window)
-        mg.check_item(window)
-        mg.end(level, window)
-
-
-        level.show(window)
-        window.blit(mg.player, (mg.x, mg.y))
+        window.blit(macgyver.player, (macgyver.x, macgyver.y))
+        macgyver.check_item(window)
+        macgyver.end(level, window)
         pygame.display.flip()
-
-
-
-
-
-
 
 if __name__ == '__main__':
     main()

@@ -1,9 +1,10 @@
 """The labyritnh's classes"""
 
-#pylint: disable=invalid-name
+#pylint: disable=invalid-name, wildcard-import, unused-wildcard-import
 
 import random
 import time
+import sys
 from pygame.locals import *
 import pygame
 from constants import NUMBER_OF_SPRITE, SPRITE_SIZE, IMAGE_WALL, IMAGE_FLOOR, IMAGE_GUARD
@@ -127,12 +128,12 @@ class Player:
                 window.blit(loser, (20, 50))
                 pygame.display.flip()
                 time.sleep(2)
-                exit()
+                sys.exit()
             elif len(self.ITEMS) == 3:
                 window.blit(gotall, (20, 50))
                 pygame.display.flip()
                 time.sleep(2)
-                exit()
+                sys.exit()
 
 class Item:
     """Classwhich place the items on the map"""
