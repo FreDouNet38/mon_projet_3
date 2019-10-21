@@ -18,6 +18,11 @@ def main():
     window = pygame.display.set_mode((SIDE, SIDE))
     pygame.display.set_caption(WINDOW_TITLE)
 
+    #To generate a Font to display the score
+    myfont = pygame.font.SysFont('score', 45)
+    ifont = pygame.font.SysFont('items', 30)
+    idisplay = ifont.render('items:', 1, (0, 0, 0))
+
     #To display the level
     level = Map('level.txt')
     level.generate()
@@ -66,6 +71,9 @@ def main():
         window.blit(macgyver.player, (macgyver.x, macgyver.y))
         macgyver.check_item(window)
         macgyver.end(level, window)
+        score_display = myfont.render(str(len(macgyver.ITEMS)), 1, (0, 0, 0))
+        window.blit(idisplay, (0, 390))
+        window.blit(score_display, (10, 410))
         pygame.display.flip()
 
 if __name__ == '__main__':
